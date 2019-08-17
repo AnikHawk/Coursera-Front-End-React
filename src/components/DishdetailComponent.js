@@ -108,8 +108,8 @@ class CommentForm extends React.Component {
             <LocalForm onSubmit={values => this.handleSubmit(values)}>
               <div className="form-group">
                 <Label htmlFor="rating">Rating</Label>
-                <Input
-                  type="select"
+                <Control.select
+                  model=".rating"
                   name="rating"
                   id="rating"
                   className="selectpicker show-tick form-control"
@@ -119,7 +119,7 @@ class CommentForm extends React.Component {
                   <option>3</option>
                   <option>4</option>
                   <option>5</option>
-                </Input>
+                </Control.select>
               </div>
 
               <div className="form-group">
@@ -150,7 +150,13 @@ class CommentForm extends React.Component {
 
               <div className="form-group">
                 <Label htmlFor="comment">Comment</Label>
-                <Input type="textarea" name="comment" rows="6" id="comment" />
+                <Control.text
+                  model=".comment"
+                  id="comment"
+                  name="comment"
+                  placeholder="Your Comment"
+                  className="form-control"
+                />
               </div>
               <Button
                 className="mt-2"
