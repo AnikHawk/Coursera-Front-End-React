@@ -21,7 +21,7 @@ const required = val => val && val.length;
 const maxLength = len => val => !val || val.length <= len;
 const minLength = len => val => val && val.length >= len;
 
-function RenderComments({comments}) {
+function RenderComments({comments, addComment, dishId}) {
   let _comments = comments.map(comment => {
     var options = {
       weekday: 'long',
@@ -48,7 +48,7 @@ function RenderComments({comments}) {
     <div>
       <h4>Comments</h4>
       <ul className="list-unstyled">{_comments}</ul>
-      <CommentForm />
+      <CommentForm dishId={dishId} addComment={addComment} />
     </div>
   );
 }
@@ -80,6 +80,13 @@ class CommentForm extends React.Component {
   }
 
   handleSubmit(values) {
+    this.props.addComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
+
     console.log('Current State is: ' + JSON.stringify(values));
     alert('Current State is: ' + JSON.stringify(values));
     // event.preventDefault();
@@ -123,11 +130,11 @@ class CommentForm extends React.Component {
               </div>
 
               <div className="form-group">
-                <Label htmlFor="username">First Name</Label>
+                <Label htmlFor="author">First Name</Label>
                 <Control.text
-                  model=".username"
-                  id="username"
-                  name="username"
+                  model=".author"
+                  id="author"
+                  name="author"
                   placeholder="Your Name"
                   className="form-control"
                   validators={{
@@ -138,7 +145,7 @@ class CommentForm extends React.Component {
                 />
                 <Errors
                   className="text-danger"
-                  model=".username"
+                  model=".author"
                   show="touched"
                   messages={{
                     required: 'Required! ',
@@ -150,11 +157,12 @@ class CommentForm extends React.Component {
 
               <div className="form-group">
                 <Label htmlFor="comment">Comment</Label>
-                <Control.text
+                <Control.textarea
                   model=".comment"
                   id="comment"
                   name="comment"
                   placeholder="Your Comment"
+                  rows="6"
                   className="form-control"
                 />
               </div>
@@ -195,7 +203,11 @@ const Dishdetail = props => {
             <RenderDish dish={props.dish} />
           </div>
           <div className="col-12 col-md-5 m-1">
-            <RenderComments comments={props.comments} />
+            <RenderComments
+              comments={props.comments}
+              addComment={props.addComment}
+              dishId={props.dish.id}
+            />
           </div>
         </div>
       </div>
