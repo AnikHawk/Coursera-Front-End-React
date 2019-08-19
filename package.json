@@ -16,6 +16,8 @@
     "react-scripts": "3.1.0",
     "reactstrap": "5.0.0",
     "redux": "3.7.2",
+    "redux-logger": "3.0.6",
+    "redux-thunk": "2.2.0",
     "yarn": "^1.17.3"
   },
   "scripts": {
